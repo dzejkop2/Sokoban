@@ -1,19 +1,17 @@
 import pyglet
+import math
 from pyglet import image
-
 from pyglet.window import key
 
-WIDTH = 1000
-HEIGHT = 800
+WIDTH = 1200
+HEIGHT = 1000
 
-size = 20
+size = 40
 robko_x = WIDTH // size // 2 * size
 robko_y = HEIGHT // size // 2 * size
 
 robko_mx = 0
 robko_my = 0
-
-pressed_keys = set()
 
 window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 
@@ -28,25 +26,33 @@ def draw_square(x, y, size, colour = (255,255,255,0)):
 
 
 def on_key_press(symbol,modifier):
-    if symbol == key.W:
-        pressed_keys.add("UP")
-    if symbol == key.S:
-        pressed_keys.add("DOWN")
-
-def on_key_release(symbol,modifier):
-    if symbol == key.W:
-        pressed_keys.discard("UP")
-    if symbol == key.S:
-        pressed_keys.discard("DOWN")
-
-def move():
     global robko_mx, robko_my
-    if ("UP") in pressed_keys:
+    if symbol == key.W:
         robko_mx = 0
         robko_my = size
-    if ("DOWN") in pressed_keys:
+    if symbol == key.S:
         robko_mx = 0
         robko_my = -size
+    if symbol == key.A:
+        robko_mx = -size
+        robko_my = 0
+    if symbol == key.D:
+        robko_mx = size
+        robko_my = 0
+def on_key_release(symbol,modifier):
+    global robko_mx, robko_my
+    if symbol == key.W:
+        robko_mx = 0
+        robko_my = 0
+    if symbol == key.S:
+        robko_mx = 0
+        robko_my = 0
+    if symbol == key.A:
+        robko_mx = 0
+        robko_my = 0
+    if symbol == key.D:
+        robko_mx = 0
+        robko_my = 0
 
 
 def update(dt):
@@ -55,9 +61,9 @@ def update(dt):
     robko_y += robko_my
 
 
+pyglet.clock.schedule_interval(update,1/30)
 window.push_handlers(
     on_key_press=on_key_press,
     on_key_release=on_key_release
 )
-pyglet.clock.schedule_interval(update,1/30)
 pyglet.app.run()
