@@ -34,7 +34,7 @@ def draw_square(x, y, size, colour):
     img.blit(x,y)
 
 def on_key_press(symbol,modifier):
-    global robko_mx, robko_my,box_mx,box_my
+    global robko_mx, robko_my,box_mx,box_my,move_box
     if symbol == key.W:
         robko_mx = 0
         robko_my = size
@@ -60,7 +60,7 @@ def on_key_press(symbol,modifier):
             if robko_x + size == box_x:
                 box_mx = size_box
 def on_key_release(symbol,modifier):
-    global robko_mx, robko_my,box_mx,box_my
+    global robko_mx, robko_my,box_mx,box_my,move_box
     if symbol == key.W:
         robko_mx = 0
         robko_my = 0
@@ -77,6 +77,7 @@ def on_key_release(symbol,modifier):
         box_mx = 0
         box_my = 0
     if symbol == key.D:
+        move_box = 0
         robko_mx = 0
         robko_my = 0
         box_mx = 0
