@@ -8,6 +8,7 @@ HEIGHT = 1000
 
 size = 40
 size_box = 40
+size_barrier = 40
 
 robko_x = WIDTH // size // 2 * size
 robko_y = HEIGHT // size // 2 * size
@@ -29,9 +30,13 @@ def on_draw():
     draw_square(robko_x,robko_y,size, (255,255,255,0))
     draw_square(box_x, box_y, size_box, (255,1,1,0))
 
+
 def draw_square(x, y, size, colour):
     img = image.create(size, size, image.SolidColorImagePattern(colour))
     img.blit(x,y)
+
+def barrier():
+    if
 
 def on_key_press(symbol,modifier):
     global robko_mx, robko_my,box_mx,box_my,move_box
@@ -91,7 +96,8 @@ def update(dt):
     box_x += box_mx
     box_y += box_my
 
-pyglet.clock.schedule_interval(update,1/15)
+pyglet.clock.schedule_interval(update, 1/15)
+
 window.push_handlers(
     on_key_press=on_key_press,
     on_key_release=on_key_release
