@@ -5,20 +5,23 @@ from pyglet.window import key
 WIDTH = 1200
 HEIGHT = 800
 
-size = 40
 size_box = 40
 
+#robko
+size = 40
 robko_x = WIDTH // size // 2 * size
 robko_y = HEIGHT // size // 2 * size
+robko_mx = 0
+robko_my = 0
 
+#box 1
 box1_x = 400
-box1_y = 400
-
+box1_y = 600
 box1_mx = 0
 box1_my = 0
 
-robko_mx = 0
-robko_my = 0
+box_check_x = 200
+box_check_y = 200
 
 window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 
@@ -26,8 +29,17 @@ window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 @window.event
 def on_draw():
     window.clear()
-    draw_square(robko_x,robko_y,size, (255,255,255,0) )
+    draw_square(0,0,1500,(0,191,255,0))
+    pic = image.load("robko.png")
+    pic.blit(robko_x, robko_y)
+    draw_square(box_check_x, box_check_y, size_box, (1, 255, 1, 0))
     draw_square(box1_x, box1_y, size_box,(255,1,1,0))
+
+
+def check_box(dt):
+    if box1_x == box_check_x:
+        if box1_y == box_check_y:
+            exit()
 
 #zadáva ako vykresliť kocku
 def draw_square(x, y, size, color):
@@ -48,7 +60,7 @@ def barrier(dt):
 
 #movement
 def on_key_press(symbol,modifier):
-    global robko_mx, robko_my,box1_mx,box1_my,move_box
+    global robko_mx, robko_my,box1_mx,box1_my
     if symbol == key.W:
         robko_mx = 0
         robko_my = size
@@ -76,7 +88,7 @@ def on_key_press(symbol,modifier):
 
 
 def on_key_release(symbol,modifier):
-    global robko_mx, robko_my,box1_mx,box1_my,move_box
+    global robko_mx, robko_my,box1_mx,box1_my
     if symbol == key.W:
         robko_mx = 0
         robko_my = 0
@@ -93,7 +105,6 @@ def on_key_release(symbol,modifier):
         box1_mx = 0
         box1_my = 0
     if symbol == key.D:
-        move_box = 0
         robko_mx = 0
         robko_my = 0
         box1_mx = 0
@@ -101,12 +112,13 @@ def on_key_release(symbol,modifier):
 
 
 def update(dt):
-    global robko_x,robko_y,box1_x,box1_y,box1_mx,box1_my
+    global robko_x,robko_y,box1_x,box1_y
     robko_x += robko_mx
     robko_y += robko_my
     box1_x += box1_mx
     box1_y += box1_my
 
+pyglet.clock.schedule_interval(check_box, 1/15)
 pyglet.clock.schedule_interval(update, 1/15)
 pyglet.clock.schedule_interval(barrier, 1/15)
 window.push_handlers(
