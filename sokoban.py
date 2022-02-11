@@ -30,11 +30,10 @@ window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 def on_draw():
     window.clear()
     draw_square(0,0,1500,(0,191,255,0))
-    pic = image.load("robko.png")
-    pic.blit(robko_x, robko_y)
     draw_square(box_check_x, box_check_y, size_box, (1, 255, 1, 0))
     draw_square(box1_x, box1_y, size_box,(255,1,1,0))
-
+    pic = image.load("robko.png")
+    pic.blit(robko_x, robko_y)
 
 def check_box(dt):
     if box1_x == box_check_x:
