@@ -48,12 +48,12 @@ def on_draw():
     """
 
 def check_box1(dt):
-    global box_mx, box_my
+    global box1_x, box1_y
     if box1_x == box_check_x:
         if box1_y == box_check_y:
             SKORE[0] += 1
             pyglet.clock.unschedule(check_box1)
-            pyglet.clock.unschedule(update_box1)
+
 
 #zadáva ako vykresliť kocku
 def draw_square(x, y, size, color):
@@ -62,54 +62,51 @@ def draw_square(x, y, size, color):
 
 #zadáva kde sa môže pohybovať
 def barrier(dt):
-    global robko_mx, robko_my, box1_mx, box1_my
-    if robko_x + size >= WIDTH:
-        robko_mx = 0
+    global robko_x, robko_y
+    if robko_x >= WIDTH:
+        robko_x = WIDTH - size
     if robko_x <= 0:
-        robko_mx = 0
-    if robko_y + size >= HEIGHT:
-        robko_my = 0
+        robko_x = 0
+    if robko_y >= HEIGHT:
+        robko_y = HEIGHT - size
     if robko_y <= 0:
-        robko_my = 0
+        robko_y = 0
 
 def box_move_UP():
-    global box1_my
+    global box1_y
     if robko_x == box1_x:
-        if robko_y + size == box1_y:
-            box1_my = size
+        if robko_y == box1_y:
+            box1_y += size
 def box_move_LEFT():
-    global box1_mx
+    global box1_x
     if robko_y == box1_y:
-        if robko_x - size == box1_x:
-            box1_mx = -size
+        if robko_x == box1_x:
+            box1_x -= size
 def box_move_RIGHT():
-    global box1_mx
+    global box1_x
     if robko_y == box1_y:
-        if robko_x + size == box1_x:
-            box1_mx = size
+        if robko_x == box1_x:
+            box1_x += size
 def box_move_DOWN():
-    global box1_my
+    global box1_y
     if robko_x == box1_x:
-        if robko_y - size == box1_y:
-            box1_my = -size
+        if robko_y == box1_y:
+            box1_y -= size
+
 #movement
 def on_key_press(symbol,modifier):
-    global robko_mx, robko_my
+    global robko_x, robko_y
     if symbol == key.W:
-        robko_mx = 0
-        robko_my = size
+        robko_y += size
         box_move_UP()
     if symbol == key.S:
-        robko_mx = 0
-        robko_my = -size
+        robko_y -= size
         box_move_DOWN()
     if symbol == key.A:
-        robko_mx = -size
-        robko_my = 0
+        robko_x -= size
         box_move_LEFT()
     if symbol == key.D:
-        robko_mx = size
-        robko_my = 0
+        robko_x += size
         box_move_RIGHT()
 
 def on_key_release(symbol,modifier):
@@ -135,24 +132,10 @@ def on_key_release(symbol,modifier):
         box1_mx = 0
         box1_my = 0
 
-#update na boxy
-def update_box1(dt):
-    global box1_x, box1_y
-    box1_x += box1_mx
-    box1_y += box1_my
-
-#update na movement
-def update(dt):
-    global robko_x,robko_y
-    robko_x += robko_mx
-    robko_y += robko_my
-
-
 def schedules():
     # pyglet.clock.schedule_interval(check_box, REFRESH_RATE)
-    pyglet.clock.schedule_interval(update_box1, REFRESH_RATE)
     pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
-    pyglet.clock.schedule_interval(update, REFRESH_RATE)
+    # pyglet.clock.schedule_interval(update, REFRESH_RATE)
     pyglet.clock.schedule_interval(barrier, REFRESH_RATE)
 
 schedules()
