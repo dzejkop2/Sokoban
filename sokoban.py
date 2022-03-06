@@ -29,7 +29,7 @@ window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 @window.event
 def on_draw():
     window.clear()
-    background = image.load("tiles/level_3.png")
+    background = image.load("tiles/level_1.png")
     background.blit(0,0)
     skore = pyglet.text.Label(f"{SKORE[0]} / {max_skore}", font_size=FONTSIZE, x=160, y= HEIGHT - 96, anchor_x="right")
     skore.draw()
@@ -43,6 +43,7 @@ def on_draw():
 
 def check_box1(dt):
     global box1_x, box1_y
+    print(robko_x, robko_y)
     if box1_x == box_check_x:
         if box1_y == box_check_y:
             SKORE[0] += 1
@@ -58,14 +59,14 @@ def draw_square(x, y, size, color):
 #zadáva kde sa môže pohybovať
 def barrier(dt):
     global robko_x, robko_y
-    if robko_x >= WIDTH:
-        robko_x = WIDTH - size
-    if robko_x <= 0:
-        robko_x = 0
-    if robko_y >= HEIGHT:
-        robko_y = HEIGHT - size
-    if robko_y <= 0:
-        robko_y = 0
+    if robko_x >= 448:
+        robko_x = 448 - size
+    if robko_x <= 96:
+        robko_x = 96
+    if robko_y >= 416:
+        robko_y = 416 - size
+    if robko_y <= 96:
+        robko_y = 96
 
 def box_move_UP():
     global box1_y
@@ -114,4 +115,5 @@ schedules()
 window.push_handlers(
     on_key_press=on_key_press
 )
+
 pyglet.app.run()
