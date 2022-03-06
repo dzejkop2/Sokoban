@@ -23,14 +23,13 @@ box1_y = 600
 
 box_check_x = 200
 box_check_y = 200
-
 window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 
 #vykresluje kocky
 @window.event
 def on_draw():
     window.clear()
-    background = image.load("tiles/level_1.png")
+    background = image.load("tiles/level_3.png")
     background.blit(0,0)
     skore = pyglet.text.Label(f"{SKORE[0]} / {max_skore}", font_size=FONTSIZE, x=160, y= HEIGHT - 96, anchor_x="right")
     skore.draw()
