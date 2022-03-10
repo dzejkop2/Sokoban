@@ -6,16 +6,14 @@ WIDTH = 576
 HEIGHT = 672
 REFRESH_RATE = 1/15
 FONTSIZE = 36
-
 SKORE = [0]
 max_skore = 4
+level1 = True
+level2 = False
+block_x = int()
+block_y = int()
 
-level1 = False
-level2 = True
-
-#robko
 size = 32
-
 
 window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 
@@ -24,54 +22,121 @@ window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 def on_draw():
     window.clear()
     background = image.load("tiles/level.png")
-    background.blit(0,0)
-    skore = pyglet.text.Label(f"{SKORE[0]} / {max_skore}", font_size=FONTSIZE, x=160, y= HEIGHT - 96, anchor_x="right")
+    background.blit(0, 0)
+    skore = pyglet.text.Label(f"{SKORE[0]} / {max_skore}", font_size=FONTSIZE, x=160, y=HEIGHT - 96,
+                                  anchor_x="right")
     skore.draw()
     draw_square(robko_x, robko_y, size, (255, 255, 255, 0))
     draw_square(box1_x, box1_y, size, (255, 1, 1, 0))
+    if max_skore == SKORE[0]:
+        vyhra = pyglet.text.Label("Vyhral si!", font_size=32, x=370, y=288, anchor_x="right")
+        vyhra.draw()
 
 
-    """
+"""
     draw_square(box_check_x, box_check_y, size, (1, 255, 1, 0))
     robo = image.load("robko.png")
     robo.blit(robko_x, robko_y)
-    """
+"""
+
+def draw_square(x, y, size, color):
+    img = image.create(size, size, image.SolidColorImagePattern(color))
+    img.blit(x,y)
+
 
 def check_box1(dt):
-    global box1_x, box1_y
     print(robko_x, robko_y)
     if box1_x == box_check1_x:
         if box1_y == box_check1_y:
             SKORE[0] += 1
             pyglet.clock.unschedule(check_box1)
+    elif box2_x == box_check1_x:
+        if box2_y == box_check1_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box1)
+    elif box3_x == box_check1_x:
+        if box3_y == box_check1_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box1)
+    elif box4_x == box_check1_x:
+        if box4_y == box_check1_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box1)
 def check_box2(dt):
-    global box2_x, box2_y
-    if box2_x == box_check2_x:
+    if box1_x == box_check2_x:
+        if box1_y == box_check2_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box2)
+    elif box2_x == box_check2_x:
         if box2_y == box_check2_y:
             SKORE[0] += 1
             pyglet.clock.unschedule(check_box2)
+    elif box3_x == box_check2_x:
+        if box3_y == box_check2_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box2)
+    elif box4_x == box_check2_x:
+        if box4_y == box_check2_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box2)
 def check_box3(dt):
-    global box3_x, box3_y
-    if box3_x == box_check3_x:
+    if box1_x == box_check3_x:
+        if box1_y == box_check3_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box3)
+    elif box2_x == box_check3_x:
+        if box2_y == box_check3_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box3)
+    elif box3_x == box_check3_x:
         if box3_y == box_check3_y:
             SKORE[0] += 1
             pyglet.clock.unschedule(check_box3)
+    elif box4_x == box_check3_x:
+        if box4_y == box_check3_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box3)
 def check_box4(dt):
-    global box4_x, box4_y
-    if box4_x == box_check4_x:
+    if box1_x == box_check4_x:
+        if box1_y == box_check4_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box4)
+    elif box2_x == box_check4_x:
+        if box2_y == box_check4_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box4)
+    elif box3_x == box_check4_x:
+        if box3_y == box_check4_y:
+            SKORE[0] += 1
+            pyglet.clock.unschedule(check_box4)
+    elif box4_x == box_check4_x:
         if box4_y == box_check4_y:
             SKORE[0] += 1
             pyglet.clock.unschedule(check_box4)
 #zadáva ako vykresliť kocku
-def draw_square(x, y, size, color):
-    img = image.create(size, size, image.SolidColorImagePattern(color))
-    img.blit(x,y)
 
 def block(block_x,block_y):
-    image.load("tiles/stone.png")
-    image.blit(block_x,block_y)
+    stone = image.load("tiles/stone.png")
+    stone.blit(block_x,block_y)
 
-
+def block_barrier(dt):
+    global block_x, block_y,robko_x,robko_y
+    if robko_x == block_x - size:
+        if robko_y == block_y:
+            if robko_x == block_x:
+                robko_x -= size
+    if robko_x == block_x + size:
+        if robko_y == block_y:
+            if robko_x == block_x:
+                robko_x += size
+    if robko_y == block_y - size:
+        if robko_x == block_x:
+            if robko_y == block_y:
+                robko_y += size
+    if robko_y == block_y + size:
+        if robko_x == block_x:
+            if robko_y == block_y:
+                robko_y -= size
 def box_barrier(dt):
     global robko_x,robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
     if box1_x == 416:
@@ -138,7 +203,6 @@ def box_barrier(dt):
         if robko_y <= box4_y:
             if robko_x == box4_x:
                 robko_y += size
-#zadáva kde sa môže pohybovať
 def barrier(dt):
     global robko_x, robko_y,box1_x,box1_y
     if robko_x >= 416:
@@ -236,6 +300,7 @@ def schedules():
     pyglet.clock.schedule_interval(check_box2, REFRESH_RATE)
     pyglet.clock.schedule_interval(check_box3, REFRESH_RATE)
     pyglet.clock.schedule_interval(check_box4, REFRESH_RATE)
+    pyglet.clock.schedule_interval(block_barrier,REFRESH_RATE)
     pyglet.clock.schedule_interval(barrier, REFRESH_RATE)
     pyglet.clock.schedule_interval(box_barrier, REFRESH_RATE)
 
@@ -250,8 +315,8 @@ if level1 == True:
     box3_y = 0
     box4_x = 0
     box4_y = 0
-    box_check1_x = 800
-    box_check1_y = 800
+    box_check1_x = 224
+    box_check1_y = 192
     box_check2_x = 0
     box_check2_y = 0
     box_check3_x = 0
