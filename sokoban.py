@@ -8,14 +8,23 @@ REFRESH_RATE = 1/15
 FONTSIZE = 36
 SKORE = [0]
 max_skore = 4
-level1 = True
+level1 = False
 level2 = False
-menu = False
+menu = True
 
 box1 = image.load("tiles/box.png")
 box2 = image.load("tiles/box.png")
 box3 = image.load("tiles/box.png")
 box4 = image.load("tiles/box.png")
+lvl1 = image.load("tiles/level1_nahlad.png")
+lvl2 = image.load("tiles/level2_nahlad.png")
+checked_box = pyglet.image.load("tiles/box_checked.png")
+vyber = pyglet.sprite.Sprite(lvl1)
+vyber.x = -200
+vyber.y = -200
+
+pick_lvl1 = 0
+pick_lvl2 = 0
 
 size = 32
 
@@ -25,7 +34,9 @@ window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 @window.event
 def on_draw():
     if menu == True:
-        pass
+        background = image.load("tiles/menu.png")
+        background.blit(0,0)
+        vyber.draw()
     if menu == False:
         window.clear()
         if level1 == True:
@@ -46,18 +57,11 @@ def on_draw():
             vyhra = pyglet.text.Label("Vyhral si!", font_size=32, x =370, y=288, anchor_x="right")
             vyhra.draw()
 
-
-"""
-    draw_square(box_check_x, box_check_y, size, (1, 255, 1, 0))
-    robo = image.load("robko.png")
-    robo.blit(robko_x, robko_y)
-"""
-
 def draw_square(x, y, size, color):
     img = image.create(size, size, image.SolidColorImagePattern(color))
     img.blit(x,y)
 
-checked_box = pyglet.image.load("tiles/box_checked.png")
+
 def check_box1(dt):
     global box1, box2, box3, box4
     print(robko_x, robko_y)
@@ -147,9 +151,6 @@ def check_box4(dt):
             SKORE[0] += 1
             box4 = checked_box
             pyglet.clock.unschedule(check_box4)
-#zadáva ako vykresliť kocku
-
-
 def box_barrier(dt):
     global robko_x,robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
     if level1 == True:
@@ -282,7 +283,6 @@ def box_barrier(dt):
             if robko_y <= box4_y:
                 if robko_x == box4_x:
                     robko_y += size
-
 def barrier(dt):
     global robko_x, robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
     if level1 == True:
@@ -576,7 +576,7 @@ def box_move_DOWN():
 
 #movement
 def on_key_press(symbol,modifier):
-    global robko_x, robko_y
+    global robko_x, robko_y, level1, level2, menu, vyber_x, vyber_y
     if level1 == True or level2 == True:
         if symbol == key.W:
             robko_y += size
@@ -591,55 +591,71 @@ def on_key_press(symbol,modifier):
             robko_x += size
             box_move_RIGHT()
     elif menu == True:
-        pass
+        global vyber
+        if symbol == key.D:
+            vyber.image = lvl2
+            vyber.x = 318
+            vyber.y = 190
+        if symbol == key.A:
+            vyber.image = lvl1
+            vyber.x = 158
+            vyber.y = 190
+        if symbol == key.ENTER:
+            if vyber.x == 318:
+                menu = False
+                level1 = True
+            elif vyber.x == 158:
+                menu = False
+                level2 = True
 
 
 def schedules():
-    pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
-    pyglet.clock.schedule_interval(check_box2, REFRESH_RATE)
-    pyglet.clock.schedule_interval(check_box3, REFRESH_RATE)
-    pyglet.clock.schedule_interval(check_box4, REFRESH_RATE)
-    pyglet.clock.schedule_interval(barrier, REFRESH_RATE)
-    pyglet.clock.schedule_interval(box_barrier, REFRESH_RATE)
+    if menu != True:
+        pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
+        pyglet.clock.schedule_interval(check_box2, REFRESH_RATE)
+        pyglet.clock.schedule_interval(check_box3, REFRESH_RATE)
+        pyglet.clock.schedule_interval(check_box4, REFRESH_RATE)
+        pyglet.clock.schedule_interval(barrier, REFRESH_RATE)
+        pyglet.clock.schedule_interval(box_barrier, REFRESH_RATE)
 
 if level1 == True:
-    robko_x = 256
-    robko_y = 224
-    box1_x = 224
-    box1_y = 288
-    box2_x = 224
-    box2_y = 224
-    box3_x = 320
-    box3_y = 288
-    box4_x = 320
-    box4_y = 224
-    box_check1_x = 128
-    box_check1_y = 288
-    box_check2_x = 224
-    box_check2_y = 128
-    box_check3_x = 416
-    box_check3_y = 224
-    box_check4_x = 320
-    box_check4_y = 384
+        robko_x = 256
+        robko_y = 224
+        box1_x = 224
+        box1_y = 288
+        box2_x = 224
+        box2_y = 224
+        box3_x = 320
+        box3_y = 288
+        box4_x = 320
+        box4_y = 224
+        box_check1_x = 128
+        box_check1_y = 288
+        box_check2_x = 224
+        box_check2_y = 128
+        box_check3_x = 416
+        box_check3_y = 224
+        box_check4_x = 320
+        box_check4_y = 384
 if level2 == True:
-    robko_x = 288
-    robko_y = 288
-    box1_x = 224
-    box1_y = 224
-    box2_x = 320
-    box2_y = 224
-    box3_x = 224
-    box3_y = 288
-    box4_x = 320
-    box4_y = 288
-    box_check1_x = 128
-    box_check1_y = 160
-    box_check2_x = 384
-    box_check2_y = 128
-    box_check3_x = 416
-    box_check3_y = 352
-    box_check4_x = 160
-    box_check4_y = 384
+        robko_x = 288
+        robko_y = 288
+        box1_x = 224
+        box1_y = 224
+        box2_x = 320
+        box2_y = 224
+        box3_x = 224
+        box3_y = 288
+        box4_x = 320
+        box4_y = 288
+        box_check1_x = 128
+        box_check1_y = 160
+        box_check2_x = 384
+        box_check2_y = 128
+        box_check3_x = 416
+        box_check3_y = 352
+        box_check4_x = 160
+        box_check4_y = 384
 
 schedules()
 window.push_handlers(
