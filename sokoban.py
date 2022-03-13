@@ -24,24 +24,27 @@ window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 #vykresluje kocky
 @window.event
 def on_draw():
-    window.clear()
-    if level1 == True:
-        background = image.load("tiles/level1.png")
-        background.blit(0, 0)
-    elif level2 == True:
-        background = image.load("tiles/level2.png")
-        background.blit(0,0)
-    skore = pyglet.text.Label(f"{SKORE[0]} / {max_skore}", font_size=FONTSIZE, x=160, y=HEIGHT - 96,
-                                  anchor_x="right")
-    skore.draw()
-    draw_square(robko_x, robko_y, size, (255, 255, 255, 0))
-    box1.blit(box1_x, box1_y)
-    box2.blit(box2_x, box2_y)
-    box3.blit(box3_x, box3_y)
-    box4.blit(box4_x, box4_y)
-    if max_skore == SKORE[0]:
-        vyhra = pyglet.text.Label("Vyhral si!", font_size=32, x =370, y=288, anchor_x="right")
-        vyhra.draw()
+    if menu == True:
+        pass
+    if menu == False:
+        window.clear()
+        if level1 == True:
+            background = image.load("tiles/level1.png")
+            background.blit(0, 0)
+        elif level2 == True:
+            background = image.load("tiles/level2.png")
+            background.blit(0,0)
+        skore = pyglet.text.Label(f"{SKORE[0]} / {max_skore}", font_size=FONTSIZE, x=160, y=HEIGHT - 96,
+                                      anchor_x="right")
+        skore.draw()
+        draw_square(robko_x, robko_y, size, (255, 255, 255, 0))
+        box1.blit(box1_x, box1_y)
+        box2.blit(box2_x, box2_y)
+        box3.blit(box3_x, box3_y)
+        box4.blit(box4_x, box4_y)
+        if max_skore == SKORE[0]:
+            vyhra = pyglet.text.Label("Vyhral si!", font_size=32, x =370, y=288, anchor_x="right")
+            vyhra.draw()
 
 
 """
@@ -150,67 +153,67 @@ def check_box4(dt):
 def box_barrier(dt):
     global robko_x,robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
     if level1 == True:
-        if box1_x == 384:
+        if box1_x == 416:
             if robko_x >= box1_x:
                 if robko_y == box1_y:
                     robko_x -= size
-        elif box1_x == 160:
+        elif box1_x == 128:
             if robko_x <= box1_x:
                 if robko_y == box1_y:
                     robko_x += size
-        elif box1_y == 352:
+        elif box1_y == 384:
             if robko_y >= box1_y:
                 if robko_x == box1_x:
                     robko_y -= size
-        elif box1_y == 160:
+        elif box1_y == 128:
             if robko_y <= box1_y:
                 if robko_x == box1_x:
                     robko_y += size
-        if box2_x == 384:
+        if box2_x == 416:
             if robko_x >= box2_x:
                 if robko_y == box2_y:
                     robko_x -= size
-        elif box2_x == 160:
+        elif box2_x == 128:
             if robko_x <= box2_x:
                 if robko_y == box2_y:
                     robko_x += size
-        elif box2_y == 352:
+        elif box2_y == 384:
             if robko_y >= box2_y:
                 if robko_x == box2_x:
                     robko_y -= size
-        elif box2_y == 160:
+        elif box2_y == 128:
             if robko_y <= box2_y:
                 if robko_x == box2_x:
                     robko_y += size
-        if box3_x == 384:
+        if box3_x == 416:
             if robko_x >= box3_x:
                 if robko_y == box3_y:
                     robko_x -= size
-        elif box3_x == 160:
+        elif box3_x == 128:
             if robko_x <= box3_x:
                 if robko_y == box3_y:
                     robko_x += size
-        elif box3_y == 352:
+        elif box3_y == 384:
             if robko_y >= box3_y:
                 if robko_x == box3_x:
                     robko_y -= size
-        elif box3_y == 160:
+        elif box3_y == 128:
             if robko_y <= box3_y:
                 if robko_x == box3_x:
                     robko_y += size
-        if box4_x == 384:
+        if box4_x == 416:
             if robko_x >= box4_x:
                 if robko_y == box4_y:
                     robko_x -= size
-        elif box4_x == 160:
+        elif box4_x == 128:
             if robko_x <= box4_x:
                 if robko_y == box4_y:
                     robko_x += size
-        elif box4_y == 352:
+        elif box4_y == 384:
             if robko_y >= box4_y:
                 if robko_x == box4_x:
                     robko_y -= size
-        elif box4_y == 160:
+        elif box4_y == 128:
             if robko_y <= box4_y:
                 if robko_x == box4_x:
                     robko_y += size
@@ -279,79 +282,170 @@ def box_barrier(dt):
             if robko_y <= box4_y:
                 if robko_x == box4_x:
                     robko_y += size
+
 def barrier(dt):
     global robko_x, robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
     if level1 == True:
-        if robko_x >= 384:
-            robko_x = 384
-        if robko_y >= 352:
-            robko_y = 352
-        if robko_y <= 160:
-            robko_y = 160
+        if robko_x >= 416:
+            robko_x = 416
         if robko_x <= 128:
             robko_x = 128
-        if robko_y >= 288:
-            if robko_x <= 160:
-                robko_x = 160
-        if robko_y <= 224:
-            if robko_x <= 160:
-                robko_x = 160
-        if box1_x >= 384:
-            box1_x = 384
-        if box1_y >= 352:
-            box1_y = 352
-        if box1_y <= 160:
-            box1_y = 160
+        if robko_y >= 384:
+            robko_y = 384
+        if robko_y <= 128:
+            robko_y = 128
+        if box1_x >= 416:
+            box1_x = 416
         if box1_x <= 128:
             box1_x = 128
-        if box1_y >= 288:
-            if box1_x <= 160:
-                box1_x = 160
-        if box1_y <= 224:
-            if box1_x <= 160:
-                box1_x = 160
-        if box2_x >= 384:
-            box2_x = 384
-        if box2_y >= 352:
-            box2_y = 352
-        if box2_y <= 160:
-            box2_y = 160
+        if box1_y >= 384:
+            box1_y = 384
+        if box1_y <= 128:
+            box1_y = 128
+        if box2_x >= 416:
+            box2_x = 416
         if box2_x <= 128:
             box2_x = 128
-        if box2_y >= 288:
-            if box2_x <= 160:
-                box2_x = 160
-        if box2_y <= 224:
-            if box2_x <= 160:
-                box2_x = 160
-        if box3_x >= 384:
-            box3_x = 384
-        if box3_y >= 352:
-            box3_y = 352
-        if box3_y <= 160:
-            box3_y = 160
+        if box2_y >= 384:
+            box2_y = 384
+        if box2_y <= 128:
+            box2_y = 128
+        if box3_x >= 416:
+            box3_x = 416
         if box3_x <= 128:
             box3_x = 128
-        if box3_y >= 288:
-            if box3_x <= 160:
-                box3_x = 160
-        if box3_y <= 224:
-            if box3_x <= 160:
-                box3_x = 160
-        if box4_x >= 384:
-            box4_x = 384
-        if box4_y >= 352:
-            box4_y = 352
-        if box4_y <= 160:
-            box4_y = 160
+        if box3_y >= 384:
+            box3_y = 384
+        if box3_y <= 128:
+            box3_y = 128
+        if box4_x >= 416:
+            box4_x = 416
         if box4_x <= 128:
             box4_x = 128
-        if box4_y >= 288:
-            if box4_x <= 160:
-                box4_x = 160
-        if box4_y <= 224:
-            if box4_x <= 160:
-                box4_x = 160
+        if box4_y >= 384:
+            box4_y = 384
+        if box4_y <= 128:
+            box4_y = 128
+        if robko_y == 320:
+            if robko_x <= 192:
+                robko_y = 288
+        if robko_x == 192:
+            if robko_y >= 320:
+                robko_x = 224
+        if robko_y == 192:
+            if robko_x <= 192:
+                robko_y = 224
+        if robko_x == 192:
+            if robko_y <= 192:
+                robko_x = 224
+        if robko_y == 320:
+            if robko_x >= 352:
+                robko_y = 288
+        if robko_x == 352:
+            if robko_y >= 320:
+                robko_x = 320
+        if robko_y == 192:
+            if robko_x >= 352:
+                robko_y = 224
+        if robko_x == 352:
+            if robko_y <= 192:
+                robko_x = 320
+        if box1_y == 320:
+            if box1_x <= 192:
+                box1_y = 288
+        if box1_x == 192:
+            if box1_y >= 320:
+                box1_x = 224
+        if box1_y == 192:
+            if box1_x <= 192:
+                box1_y = 224
+        if box1_x == 192:
+            if box1_y <= 192:
+                box1_x = 224
+        if box1_y == 320:
+            if box1_x >= 352:
+                box1_y = 288
+        if box1_x == 352:
+            if box1_y >= 320:
+                box1_x = 320
+        if box1_y == 192:
+            if box1_x >= 352:
+                box1_y = 224
+        if box1_x == 352:
+            if box1_y <= 192:
+                box1_x = 320
+        if box2_y == 320:
+            if box2_x <= 192:
+                box2_y = 288
+        if box2_x == 192:
+            if box2_y >= 320:
+                box2_x = 224
+        if box2_y == 192:
+            if box2_x <= 192:
+                box2_y = 224
+        if box2_x == 192:
+            if box2_y <= 192:
+                box2_x = 224
+        if box2_y == 320:
+            if box2_x >= 352:
+                box2_y = 288
+        if box2_x == 352:
+            if box2_y >= 320:
+                box2_x = 320
+        if box2_y == 192:
+            if box2_x >= 352:
+                box2_y = 224
+        if box2_x == 352:
+            if box2_y <= 192:
+                box2_x = 320
+        if box3_y == 320:
+            if box3_x <= 192:
+                box3_y = 288
+        if box3_x == 192:
+            if box3_y >= 320:
+                box3_x = 224
+        if box3_y == 192:
+            if box3_x <= 192:
+                box3_y = 224
+        if box3_x == 192:
+            if box3_y <= 192:
+                box3_x = 224
+        if box3_y == 320:
+            if box3_x >= 352:
+                box3_y = 288
+        if box3_x == 352:
+            if box3_y >= 320:
+                box3_x = 320
+        if box3_y == 192:
+            if box3_x >= 352:
+                box3_y = 224
+        if box3_x == 352:
+            if box3_y <= 192:
+                box3_x = 320
+        if box4_y == 320:
+            if box4_x <= 192:
+                box4_y = 288
+        if box4_x == 192:
+            if box4_y >= 320:
+                box4_x = 224
+        if box4_y == 192:
+            if box4_x <= 192:
+                box4_y = 224
+        if box4_x == 192:
+            if box4_y <= 192:
+                box4_x = 224
+        if box4_y == 320:
+            if box4_x >= 352:
+                box4_y = 288
+        if box4_x == 352:
+            if box4_y >= 320:
+                box4_x = 320
+        if box4_y == 192:
+            if box4_x >= 352:
+                box4_y = 224
+        if box4_x == 352:
+            if box4_y <= 192:
+                box4_x = 320
     if level2 == True:
         if robko_x >= 416:
             robko_x = 416
@@ -393,7 +487,36 @@ def barrier(dt):
             box4_y = 384
         if box4_y <= 128:
             box4_y = 128
-
+        if robko_x == 288:
+            if robko_y >= 216:
+                robko_x += size
+        if robko_x == 256:
+            if robko_y >= 216:
+                robko_x -= size
+        if box1_x == 288:
+            if box1_y >= 216:
+                box1_x += size
+        if box1_x == 256:
+            if box1_y >= 216:
+                box1_x -= size
+        if box2_x == 288:
+            if box2_y >= 216:
+                box2_x += size
+        if box2_x == 256:
+            if box2_y >= 216:
+                box2_x -= size
+        if box3_x == 288:
+            if box3_y >= 216:
+                box3_x += size
+        if box3_x == 256:
+            if box3_y >= 216:
+                box3_x -= size
+        if box4_x == 288:
+            if box4_y >= 216:
+                box4_x += size
+        if box4_x == 256:
+            if box4_y >= 216:
+                box4_x -= size
 def box_move_UP():
     global box1_y,box2_y,box3_y,box4_y
     if robko_x == box1_x:
@@ -454,18 +577,22 @@ def box_move_DOWN():
 #movement
 def on_key_press(symbol,modifier):
     global robko_x, robko_y
-    if symbol == key.W:
-        robko_y += size
-        box_move_UP()
-    if symbol == key.S:
-        robko_y -= size
-        box_move_DOWN()
-    if symbol == key.A:
-        robko_x -= size
-        box_move_LEFT()
-    if symbol == key.D:
-        robko_x += size
-        box_move_RIGHT()
+    if level1 == True or level2 == True:
+        if symbol == key.W:
+            robko_y += size
+            box_move_UP()
+        if symbol == key.S:
+            robko_y -= size
+            box_move_DOWN()
+        if symbol == key.A:
+            robko_x -= size
+            box_move_LEFT()
+        if symbol == key.D:
+            robko_x += size
+            box_move_RIGHT()
+    elif menu == True:
+        pass
+
 
 def schedules():
     pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
@@ -486,14 +613,14 @@ if level1 == True:
     box3_y = 288
     box4_x = 320
     box4_y = 224
-    box_check1_x = 160
-    box_check1_y = 160
-    box_check2_x = 160
-    box_check2_y = 352
-    box_check3_x = 384
-    box_check3_y = 352
-    box_check4_x = 384
-    box_check4_y = 160
+    box_check1_x = 128
+    box_check1_y = 288
+    box_check2_x = 224
+    box_check2_y = 128
+    box_check3_x = 416
+    box_check3_y = 224
+    box_check4_x = 320
+    box_check4_y = 384
 if level2 == True:
     robko_x = 288
     robko_y = 288
