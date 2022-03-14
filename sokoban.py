@@ -11,6 +11,28 @@ max_skore = 4
 level1 = False
 level2 = False
 menu = True
+barrier_x_max = 416
+barrier_x_min = 128
+barrier_y_max = 384
+barrier_y_min = 128
+robko_x = 0
+robko_y = 0
+box1_x = 0
+box1_y = -1
+box2_x = 0
+box2_y = -2
+box3_x = 0
+box3_y = -3
+box4_x = 0
+box4_y = -4
+box_check1_x = -1
+box_check1_y = 0
+box_check2_x = -2
+box_check2_y = 0
+box_check3_x = -3
+box_check3_y = 0
+box_check4_x = -4
+box_check4_y = 0
 
 box1 = image.load("tiles/box.png")
 box2 = image.load("tiles/box.png")
@@ -29,6 +51,46 @@ pick_lvl2 = 0
 size = 32
 
 window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
+def check_lvl(dt):
+    global robko_x,robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y,box_check1_x,box_check1_y,box_check2_x,box_check2_y,box_check3_x,box_check3_y,box_check4_x,box_check4_y
+    if level1 == True:
+        robko_x = 256
+        robko_y = 224
+        box1_x = 224
+        box1_y = 288
+        box2_x = 224
+        box2_y = 224
+        box3_x = 320
+        box3_y = 288
+        box4_x = 320
+        box4_y = 224
+        box_check1_x = 128
+        box_check1_y = 288
+        box_check2_x = 224
+        box_check2_y = 128
+        box_check3_x = 416
+        box_check3_y = 224
+        box_check4_x = 320
+        box_check4_y = 384
+    elif level2 == True:
+        robko_x = 256
+        robko_y = 192
+        box1_x = 128
+        box1_y = 192
+        box2_x = 224
+        box2_y = 192
+        box3_x = 320
+        box3_y = 192
+        box4_x = 416
+        box4_y = 192
+        box_check1_x = 224
+        box_check1_y = 288
+        box_check2_x = 128
+        box_check2_y = 384
+        box_check3_x = 320
+        box_check3_y = 288
+        box_check4_x = 416
+        box_check4_y = 384
 
 #vykresluje kocky
 @window.event
@@ -151,149 +213,72 @@ def check_box4(dt):
             SKORE[0] += 1
             box4 = checked_box
             pyglet.clock.unschedule(check_box4)
+
+def box_barrier_lvl1(x,y):
+    global robko_x,robko_y
+    if x == barrier_x_max:
+        if robko_x >= x:
+            if robko_y == y:
+                robko_x -= size
+    elif x == barrier_x_min:
+        if robko_x <= x:
+            if robko_y == y:
+                robko_x += size
+    elif y == barrier_y_max:
+        if robko_y >= y:
+            if robko_x == x:
+                robko_y -= size
+    elif y == barrier_y_min:
+        if robko_y <= y:
+            if robko_x == x:
+                robko_y += size
+def box_barrier_lvl2(x,y):
+    global robko_x, robko_y
+    if x == barrier_x_max:
+        if robko_x >= x:
+            if robko_y == y:
+                robko_x -= size
+    elif x == barrier_x_min:
+        if robko_x <= x:
+            if robko_y == y:
+                robko_x += size
+    elif y == barrier_y_max:
+        if robko_y >= y:
+            if robko_x == x:
+                robko_y -= size
+    elif y == barrier_y_min:
+        if robko_y <= y:
+            if robko_x == x:
+                robko_y += size
 def box_barrier(dt):
     global robko_x,robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
     if level1 == True:
-        if box1_x == 416:
-            if robko_x >= box1_x:
-                if robko_y == box1_y:
-                    robko_x -= size
-        elif box1_x == 128:
-            if robko_x <= box1_x:
-                if robko_y == box1_y:
-                    robko_x += size
-        elif box1_y == 384:
-            if robko_y >= box1_y:
-                if robko_x == box1_x:
-                    robko_y -= size
-        elif box1_y == 128:
-            if robko_y <= box1_y:
-                if robko_x == box1_x:
-                    robko_y += size
-        if box2_x == 416:
-            if robko_x >= box2_x:
-                if robko_y == box2_y:
-                    robko_x -= size
-        elif box2_x == 128:
-            if robko_x <= box2_x:
-                if robko_y == box2_y:
-                    robko_x += size
-        elif box2_y == 384:
-            if robko_y >= box2_y:
-                if robko_x == box2_x:
-                    robko_y -= size
-        elif box2_y == 128:
-            if robko_y <= box2_y:
-                if robko_x == box2_x:
-                    robko_y += size
-        if box3_x == 416:
-            if robko_x >= box3_x:
-                if robko_y == box3_y:
-                    robko_x -= size
-        elif box3_x == 128:
-            if robko_x <= box3_x:
-                if robko_y == box3_y:
-                    robko_x += size
-        elif box3_y == 384:
-            if robko_y >= box3_y:
-                if robko_x == box3_x:
-                    robko_y -= size
-        elif box3_y == 128:
-            if robko_y <= box3_y:
-                if robko_x == box3_x:
-                    robko_y += size
-        if box4_x == 416:
-            if robko_x >= box4_x:
-                if robko_y == box4_y:
-                    robko_x -= size
-        elif box4_x == 128:
-            if robko_x <= box4_x:
-                if robko_y == box4_y:
-                    robko_x += size
-        elif box4_y == 384:
-            if robko_y >= box4_y:
-                if robko_x == box4_x:
-                    robko_y -= size
-        elif box4_y == 128:
-            if robko_y <= box4_y:
-                if robko_x == box4_x:
-                    robko_y += size
+        box_barrier_lvl1(box1_x, box1_y)
+        box_barrier_lvl1(box2_x, box2_y)
+        box_barrier_lvl1(box3_x, box3_y)
+        box_barrier_lvl1(box4_x, box4_y)
     if level2== True:
-        if box1_x == 416:
-            if robko_x >= box1_x:
-                if robko_y == box1_y:
-                    robko_x -= size
-        elif box1_x == 128:
-            if robko_x <= box1_x:
-                if robko_y == box1_y:
-                    robko_x += size
-        elif box1_y == 384:
-            if robko_y >= box1_y:
-                if robko_x == box1_x:
-                    robko_y -= size
-        elif box1_y == 128:
-            if robko_y <= box1_y:
-                if robko_x == box1_x:
-                    robko_y += size
-        if box2_x == 416:
-            if robko_x >= box2_x:
-                if robko_y == box2_y:
-                    robko_x -= size
-        elif box2_x == 128:
-            if robko_x <= box2_x:
-                if robko_y == box2_y:
-                    robko_x += size
-        elif box2_y == 384:
-            if robko_y >= box2_y:
-                if robko_x == box2_x:
-                    robko_y -= size
-        elif box2_y == 128:
-            if robko_y <= box2_y:
-                if robko_x == box2_x:
-                    robko_y += size
-        if box3_x == 416:
-            if robko_x >= box3_x:
-                if robko_y == box3_y:
-                    robko_x -= size
-        elif box3_x == 128:
-            if robko_x <= box3_x:
-                if robko_y == box3_y:
-                    robko_x += size
-        elif box3_y == 384:
-            if robko_y >= box3_y:
-                if robko_x == box3_x:
-                    robko_y -= size
-        elif box3_y == 128:
-            if robko_y <= box3_y:
-                if robko_x == box3_x:
-                    robko_y += size
-        if box4_x == 416:
-            if robko_x >= box4_x:
-                if robko_y == box4_y:
-                    robko_x -= size
-        elif box4_x == 128:
-            if robko_x <= box4_x:
-                if robko_y == box4_y:
-                    robko_x += size
-        elif box4_y == 384:
-            if robko_y >= box4_y:
-                if robko_x == box4_x:
-                    robko_y -= size
-        elif box4_y == 128:
-            if robko_y <= box4_y:
-                if robko_x == box4_x:
-                    robko_y += size
+        box_barrier_lvl2(box1_x, box1_y)
+        box_barrier_lvl2(box2_x, box2_y)
+        box_barrier_lvl2(box3_x, box3_y)
+        box_barrier_lvl2(box4_x, box4_y)
+
+def barrier_lvl1(x,y):
+    if x >= barrier_x_max:
+        x = barrier_x_max
+    if x <= barrier_x_min:
+        x = barrier_x_min
+
+
 def barrier(dt):
     global robko_x, robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
     if level1 == True:
-        if robko_x >= 416:
-            robko_x = 416
-        if robko_x <= 128:
-            robko_x = 128
-        if robko_y >= 384:
-            robko_y = 384
-        if robko_y <= 128:
-            robko_y = 128
+        barrier_lvl1(robko_x, robko_y)
+        barrier_lvl1(box1_x, box1_y)
+        barrier_lvl1(box2_x, box2_y)
+        barrier_lvl1(box3_x, box3_y)
+        barrier_lvl1(box4_x, box4_y)
+        """
         if box1_x >= 416:
             box1_x = 416
         if box1_x <= 128:
@@ -326,30 +311,7 @@ def barrier(dt):
             box4_y = 384
         if box4_y <= 128:
             box4_y = 128
-        if robko_y == 320:
-            if robko_x <= 192:
-                robko_y = 288
-        if robko_x == 192:
-            if robko_y >= 320:
-                robko_x = 224
-        if robko_y == 192:
-            if robko_x <= 192:
-                robko_y = 224
-        if robko_x == 192:
-            if robko_y <= 192:
-                robko_x = 224
-        if robko_y == 320:
-            if robko_x >= 352:
-                robko_y = 288
-        if robko_x == 352:
-            if robko_y >= 320:
-                robko_x = 320
-        if robko_y == 192:
-            if robko_x >= 352:
-                robko_y = 224
-        if robko_x == 352:
-            if robko_y <= 192:
-                robko_x = 320
+        
         if box1_y == 320:
             if box1_x <= 192:
                 box1_y = 288
@@ -446,7 +408,10 @@ def barrier(dt):
         if box4_x == 352:
             if box4_y <= 192:
                 box4_x = 320
+        """
     if level2 == True:
+        barrier_lvl1(robko_x, robko_y)
+        """
         if robko_x >= 416:
             robko_x = 416
         if robko_x <= 128:
@@ -517,6 +482,9 @@ def barrier(dt):
         if box4_x == 256:
             if box4_y >= 216:
                 box4_x -= size
+        """
+
+
 def box_move_UP():
     global box1_y,box2_y,box3_y,box4_y
     if robko_x == box1_x:
@@ -573,8 +541,6 @@ def box_move_DOWN():
     if robko_x == box4_x:
         if robko_y == box4_y:
             box4_y -= size
-
-#movement
 def on_key_press(symbol,modifier):
     global robko_x, robko_y, level1, level2, menu, vyber_x, vyber_y
     if level1 == True or level2 == True:
@@ -602,60 +568,22 @@ def on_key_press(symbol,modifier):
             vyber.y = 190
         if symbol == key.ENTER:
             if vyber.x == 318:
-                menu = False
-                level1 = True
-            elif vyber.x == 158:
-                menu = False
                 level2 = True
+                menu = False
+                pyglet.clock.schedule_once(check_lvl, 0)
+            elif vyber.x == 158:
+                level1 = True
+                menu = False
+                pyglet.clock.schedule_once(check_lvl, 0)
 
 
 def schedules():
-    if menu != True:
-        pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
-        pyglet.clock.schedule_interval(check_box2, REFRESH_RATE)
-        pyglet.clock.schedule_interval(check_box3, REFRESH_RATE)
-        pyglet.clock.schedule_interval(check_box4, REFRESH_RATE)
-        pyglet.clock.schedule_interval(barrier, REFRESH_RATE)
-        pyglet.clock.schedule_interval(box_barrier, REFRESH_RATE)
-
-if level1 == True:
-        robko_x = 256
-        robko_y = 224
-        box1_x = 224
-        box1_y = 288
-        box2_x = 224
-        box2_y = 224
-        box3_x = 320
-        box3_y = 288
-        box4_x = 320
-        box4_y = 224
-        box_check1_x = 128
-        box_check1_y = 288
-        box_check2_x = 224
-        box_check2_y = 128
-        box_check3_x = 416
-        box_check3_y = 224
-        box_check4_x = 320
-        box_check4_y = 384
-if level2 == True:
-        robko_x = 288
-        robko_y = 288
-        box1_x = 224
-        box1_y = 224
-        box2_x = 320
-        box2_y = 224
-        box3_x = 224
-        box3_y = 288
-        box4_x = 320
-        box4_y = 288
-        box_check1_x = 128
-        box_check1_y = 160
-        box_check2_x = 384
-        box_check2_y = 128
-        box_check3_x = 416
-        box_check3_y = 352
-        box_check4_x = 160
-        box_check4_y = 384
+    pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
+    pyglet.clock.schedule_interval(check_box2, REFRESH_RATE)
+    pyglet.clock.schedule_interval(check_box3, REFRESH_RATE)
+    pyglet.clock.schedule_interval(check_box4, REFRESH_RATE)
+    pyglet.clock.schedule_interval(barrier, REFRESH_RATE)
+    pyglet.clock.schedule_interval(box_barrier, REFRESH_RATE)
 
 schedules()
 window.push_handlers(
