@@ -15,6 +15,7 @@ barrier_x_max = 416
 barrier_x_min = 128
 barrier_y_max = 384
 barrier_y_min = 128
+
 robko_x = 0
 robko_y = 0
 box1_x = 0
@@ -41,19 +42,17 @@ box4 = image.load("tiles/box.png")
 lvl1 = image.load("tiles/level1_nahlad.png")
 lvl2 = image.load("tiles/level2_nahlad.png")
 checked_box = pyglet.image.load("tiles/box_checked.png")
+
 vyber = pyglet.sprite.Sprite(lvl1)
 vyber.x = -200
 vyber.y = -200
-
-pick_lvl1 = 0
-pick_lvl2 = 0
 
 size = 32
 
 window = pyglet.window.Window(width=WIDTH, height=HEIGHT)
 def check_lvl(dt):
     global robko_x,robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y,box_check1_x,box_check1_y,box_check2_x,box_check2_y,box_check3_x,box_check3_y,box_check4_x,box_check4_y
-    if level1 == True:
+    if level1 is True:
         robko_x = 256
         robko_y = 224
         box1_x = 224
@@ -72,7 +71,7 @@ def check_lvl(dt):
         box_check3_y = 224
         box_check4_x = 320
         box_check4_y = 384
-    elif level2 == True:
+    elif level2 is True:
         robko_x = 256
         robko_y = 192
         box1_x = 128
@@ -91,26 +90,25 @@ def check_lvl(dt):
         box_check3_y = 288
         box_check4_x = 416
         box_check4_y = 384
-
-#vykresluje kocky
 @window.event
 def on_draw():
-    if menu == True:
+    if menu is True:
         background = image.load("tiles/menu.png")
         background.blit(0,0)
         vyber.draw()
-    if menu == False:
+    if menu is False:
         window.clear()
-        if level1 == True:
+        if level1 is True:
             background = image.load("tiles/level1.png")
             background.blit(0, 0)
-        elif level2 == True:
+        elif level2 is True:
             background = image.load("tiles/level2.png")
             background.blit(0,0)
         skore = pyglet.text.Label(f"{SKORE[0]} / {max_skore}", font_size=FONTSIZE, x=160, y=HEIGHT - 96,
                                       anchor_x="right")
         skore.draw()
-        draw_square(robko_x, robko_y, size, (255, 255, 255, 0))
+        robko = image.load("tiles/robko.png")
+        robko.blit(robko_x,robko_y)
         box1.blit(box1_x, box1_y)
         box2.blit(box2_x, box2_y)
         box3.blit(box3_x, box3_y)
@@ -118,11 +116,6 @@ def on_draw():
         if max_skore == SKORE[0]:
             vyhra = pyglet.text.Label("Vyhral si!", font_size=32, x =370, y=288, anchor_x="right")
             vyhra.draw()
-
-def draw_square(x, y, size, color):
-    img = image.create(size, size, image.SolidColorImagePattern(color))
-    img.blit(x,y)
-
 
 def check_box1(dt):
     global box1, box2, box3, box4
@@ -214,6 +207,7 @@ def check_box4(dt):
             box4 = checked_box
             pyglet.clock.unschedule(check_box4)
 
+
 def box_barrier_lvl1(x,y):
     global robko_x,robko_y
     if x == barrier_x_max:
@@ -252,33 +246,29 @@ def box_barrier_lvl2(x,y):
                 robko_y += size
 def box_barrier(dt):
     global robko_x,robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
-    if level1 == True:
+    if level1 is True:
         box_barrier_lvl1(box1_x, box1_y)
         box_barrier_lvl1(box2_x, box2_y)
         box_barrier_lvl1(box3_x, box3_y)
         box_barrier_lvl1(box4_x, box4_y)
-    if level2== True:
+    if level2 is True:
         box_barrier_lvl2(box1_x, box1_y)
         box_barrier_lvl2(box2_x, box2_y)
         box_barrier_lvl2(box3_x, box3_y)
         box_barrier_lvl2(box4_x, box4_y)
 
-def barrier_lvl1(x,y):
-    if x >= barrier_x_max:
-        x = barrier_x_max
-    if x <= barrier_x_min:
-        x = barrier_x_min
-
 
 def barrier(dt):
     global robko_x, robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
-    if level1 == True:
-        barrier_lvl1(robko_x, robko_y)
-        barrier_lvl1(box1_x, box1_y)
-        barrier_lvl1(box2_x, box2_y)
-        barrier_lvl1(box3_x, box3_y)
-        barrier_lvl1(box4_x, box4_y)
-        """
+    if level1 is True:
+        if robko_x >= 416:
+            robko_x = 416
+        if robko_x <= 128:
+            robko_x = 128
+        if robko_y >= 384:
+            robko_y = 384
+        if robko_y <= 128:
+            robko_y = 128
         if box1_x >= 416:
             box1_x = 416
         if box1_x <= 128:
@@ -311,7 +301,30 @@ def barrier(dt):
             box4_y = 384
         if box4_y <= 128:
             box4_y = 128
-        
+        if box1_y == 320:
+            if robko_x <= 192:
+                robko_y = 288
+        if robko_x == 192:
+            if robko_y >= 320:
+                robko_x = 224
+        if robko_y == 192:
+            if robko_x <= 192:
+                robko_y = 224
+        if robko_x == 192:
+            if robko_y <= 192:
+                robko_x = 224
+        if robko_y == 320:
+            if robko_x >= 352:
+                robko_y = 288
+        if robko_x == 352:
+            if robko_y >= 320:
+                robko_x = 320
+        if robko_y == 192:
+            if robko_x >= 352:
+                robko_y = 224
+        if robko_x == 352:
+            if robko_y <= 192:
+                robko_x = 320
         if box1_y == 320:
             if box1_x <= 192:
                 box1_y = 288
@@ -408,10 +421,7 @@ def barrier(dt):
         if box4_x == 352:
             if box4_y <= 192:
                 box4_x = 320
-        """
-    if level2 == True:
-        barrier_lvl1(robko_x, robko_y)
-        """
+    if level2 is True:
         if robko_x >= 416:
             robko_x = 416
         if robko_x <= 128:
@@ -482,7 +492,6 @@ def barrier(dt):
         if box4_x == 256:
             if box4_y >= 216:
                 box4_x -= size
-        """
 
 
 def box_move_UP():
@@ -542,8 +551,8 @@ def box_move_DOWN():
         if robko_y == box4_y:
             box4_y -= size
 def on_key_press(symbol,modifier):
-    global robko_x, robko_y, level1, level2, menu, vyber_x, vyber_y
-    if level1 == True or level2 == True:
+    global robko_x, robko_y, level1, level2, menu, vyber
+    if level1 is True or level2 is True:
         if symbol == key.W:
             robko_y += size
             box_move_UP()
@@ -556,8 +565,7 @@ def on_key_press(symbol,modifier):
         if symbol == key.D:
             robko_x += size
             box_move_RIGHT()
-    elif menu == True:
-        global vyber
+    if menu is True:
         if symbol == key.D:
             vyber.image = lvl2
             vyber.x = 318
@@ -577,15 +585,12 @@ def on_key_press(symbol,modifier):
                 pyglet.clock.schedule_once(check_lvl, 0)
 
 
-def schedules():
-    pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
-    pyglet.clock.schedule_interval(check_box2, REFRESH_RATE)
-    pyglet.clock.schedule_interval(check_box3, REFRESH_RATE)
-    pyglet.clock.schedule_interval(check_box4, REFRESH_RATE)
-    pyglet.clock.schedule_interval(barrier, REFRESH_RATE)
-    pyglet.clock.schedule_interval(box_barrier, REFRESH_RATE)
-
-schedules()
+pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
+pyglet.clock.schedule_interval(check_box2, REFRESH_RATE)
+pyglet.clock.schedule_interval(check_box3, REFRESH_RATE)
+pyglet.clock.schedule_interval(check_box4, REFRESH_RATE)
+pyglet.clock.schedule_interval(barrier, REFRESH_RATE)
+pyglet.clock.schedule_interval(box_barrier, REFRESH_RATE)
 window.push_handlers(
     on_key_press=on_key_press
 )
