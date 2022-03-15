@@ -589,8 +589,10 @@ def box_move_DOWN():
     if robko_x == box4_x:
         if robko_y == box4_y:
             box4_y -= size
+
+
 def on_key_press(symbol,modifier):
-    global robko_x, robko_y, level1, level2, menu, vyber
+    global robko_x, robko_y,level1, level2, menu
     if level1 is True or level2 is True:
         if symbol == key.W:
             robko_y += size
