@@ -90,6 +90,25 @@ def check_lvl(dt):
         box_check3_y = 288
         box_check4_x = 416
         box_check4_y = 384
+    elif menu is True:
+        robko_x = 0
+        robko_y = 0
+        box1_x = 0
+        box1_y = -1
+        box2_x = 0
+        box2_y = -2
+        box3_x = 0
+        box3_y = -3
+        box4_x = 0
+        box4_y = -4
+        box_check1_x = -1
+        box_check1_y = 0
+        box_check2_x = -2
+        box_check2_y = 0
+        box_check3_x = -3
+        box_check3_y = 0
+        box_check4_x = -4
+        box_check4_y = 0
 @window.event
 def on_draw():
     if menu is True:
@@ -116,10 +135,29 @@ def on_draw():
         if max_skore == SKORE[0]:
             vyhra = pyglet.text.Label("Vyhral si!", font_size=32, x =370, y=288, anchor_x="right")
             vyhra.draw()
+            pyglet.clock.schedule_once(win,3)
 
+def win(dt):
+    global box1,box2,box3,box4,level1,level2,menu
+    box1 = image.load("tiles/box.png")
+    box2 = image.load("tiles/box.png")
+    box3 = image.load("tiles/box.png")
+    box4 = image.load("tiles/box.png")
+    pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
+    pyglet.clock.schedule_interval(check_box2, REFRESH_RATE)
+    pyglet.clock.schedule_interval(check_box3, REFRESH_RATE)
+    pyglet.clock.schedule_interval(check_box4, REFRESH_RATE)
+    SKORE[0] = 0
+    if level1 is True:
+        level1 = False
+        menu = True
+        pyglet.clock.schedule_once(check_lvl,0)
+    if level2 is True:
+        level2 = False
+        menu = True
+        pyglet.clock.schedule_once(check_lvl, 0)
 def check_box1(dt):
     global box1, box2, box3, box4
-    print(robko_x, robko_y)
     if box1_x == box_check1_x:
         if box1_y == box_check1_y:
             SKORE[0] += 1
@@ -589,10 +627,8 @@ def box_move_DOWN():
     if robko_x == box4_x:
         if robko_y == box4_y:
             box4_y -= size
-
-
 def on_key_press(symbol,modifier):
-    global robko_x, robko_y,level1, level2, menu
+    global robko_x, robko_y, level1, level2, menu, vyber,box1,box2,box3,box4
     if level1 is True or level2 is True:
         if symbol == key.W:
             robko_y += size
@@ -606,6 +642,24 @@ def on_key_press(symbol,modifier):
         if symbol == key.D:
             robko_x += size
             box_move_RIGHT()
+        if symbol == key.R:
+            pyglet.clock.schedule_once(check_lvl,0)
+            if box1 == checked_box:
+                pyglet.clock.schedule_interval(check_box1, REFRESH_RATE)
+                box1 = image.load("tiles/box.png")
+                SKORE[0] -= 1
+            if box2 == checked_box:
+                pyglet.clock.schedule_interval(check_box2, REFRESH_RATE)
+                box2 = image.load("tiles/box.png")
+                SKORE[0] -= 1
+            if box3 == checked_box:
+                pyglet.clock.schedule_interval(check_box3, REFRESH_RATE)
+                box3 = image.load("tiles/box.png")
+                SKORE[0] -= 1
+            if box4 == checked_box:
+                pyglet.clock.schedule_interval(check_box4, REFRESH_RATE)
+                box4 = image.load("tiles/box.png")
+                SKORE[0] -= 1
     if menu is True:
         if symbol == key.D:
             vyber.image = lvl2
