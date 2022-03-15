@@ -257,7 +257,6 @@ def box_barrier(dt):
         box_barrier_lvl2(box3_x, box3_y)
         box_barrier_lvl2(box4_x, box4_y)
 
-
 def barrier(dt):
     global robko_x, robko_y,box1_x,box1_y,box2_x,box2_y,box3_x,box3_y,box4_x,box4_y
     if level1 is True:
@@ -301,7 +300,7 @@ def barrier(dt):
             box4_y = 384
         if box4_y <= 128:
             box4_y = 128
-        if box1_y == 320:
+        if robko_y == 320:
             if robko_x <= 192:
                 robko_y = 288
         if robko_x == 192:
@@ -328,99 +327,131 @@ def barrier(dt):
         if box1_y == 320:
             if box1_x <= 192:
                 box1_y = 288
+                robko_y = 288 - size
         if box1_x == 192:
             if box1_y >= 320:
                 box1_x = 224
+                robko_x = 224 + size
         if box1_y == 192:
             if box1_x <= 192:
                 box1_y = 224
+                robko_y = 224 + size
         if box1_x == 192:
             if box1_y <= 192:
                 box1_x = 224
+                robko_x = 224 + size
         if box1_y == 320:
             if box1_x >= 352:
                 box1_y = 288
+                robko_y = 288 - size
         if box1_x == 352:
             if box1_y >= 320:
                 box1_x = 320
+                robko_x = 320 - size
         if box1_y == 192:
             if box1_x >= 352:
                 box1_y = 224
+                robko_y = 224 + size
         if box1_x == 352:
             if box1_y <= 192:
                 box1_x = 320
+                robko_x = 320 - size
         if box2_y == 320:
             if box2_x <= 192:
                 box2_y = 288
+                robko_y = 288 - size
         if box2_x == 192:
             if box2_y >= 320:
                 box2_x = 224
+                robko_x = 224 + size
         if box2_y == 192:
             if box2_x <= 192:
                 box2_y = 224
+                robko_y = 224 + size
         if box2_x == 192:
             if box2_y <= 192:
                 box2_x = 224
+                robko_x = 224 + size
         if box2_y == 320:
             if box2_x >= 352:
                 box2_y = 288
+                robko_y = 288 - size
         if box2_x == 352:
             if box2_y >= 320:
                 box2_x = 320
+                robko_x = 320 - size
         if box2_y == 192:
             if box2_x >= 352:
                 box2_y = 224
+                robko_y = 224 + size
         if box2_x == 352:
             if box2_y <= 192:
                 box2_x = 320
+                robko_x = 320 - size
         if box3_y == 320:
             if box3_x <= 192:
                 box3_y = 288
+                robko_y = 288 - size
         if box3_x == 192:
             if box3_y >= 320:
                 box3_x = 224
+                robko_x = 224 + size
         if box3_y == 192:
             if box3_x <= 192:
                 box3_y = 224
+                robko_y = 224 + size
         if box3_x == 192:
             if box3_y <= 192:
                 box3_x = 224
+                robko_x = 224 + size
         if box3_y == 320:
             if box3_x >= 352:
                 box3_y = 288
+                robko_y = 288 - size
         if box3_x == 352:
             if box3_y >= 320:
                 box3_x = 320
+                robko_x = 320 - size
         if box3_y == 192:
             if box3_x >= 352:
                 box3_y = 224
+                robko_y = 224 + size
         if box3_x == 352:
             if box3_y <= 192:
                 box3_x = 320
+                robko_x = 320 - size
         if box4_y == 320:
             if box4_x <= 192:
                 box4_y = 288
+                robko_y = 288 - size
         if box4_x == 192:
             if box4_y >= 320:
                 box4_x = 224
+                robko_x = 224 + size
         if box4_y == 192:
             if box4_x <= 192:
                 box4_y = 224
+                robko_y = 224 + size
         if box4_x == 192:
             if box4_y <= 192:
                 box4_x = 224
+                robko_x = 224 + size
         if box4_y == 320:
             if box4_x >= 352:
                 box4_y = 288
+                robko_y = 288 - size
         if box4_x == 352:
             if box4_y >= 320:
                 box4_x = 320
+                robko_x = 320 - size
         if box4_y == 192:
             if box4_x >= 352:
                 box4_y = 224
+                robko_y = 224 + size
         if box4_x == 352:
             if box4_y <= 192:
                 box4_x = 320
+                robko_x = 320 - size
     if level2 is True:
         if robko_x >= 416:
             robko_x = 416
@@ -471,27 +502,35 @@ def barrier(dt):
         if box1_x == 288:
             if box1_y >= 216:
                 box1_x += size
+                robko_x += size
         if box1_x == 256:
             if box1_y >= 216:
                 box1_x -= size
+                robko_x -= size
         if box2_x == 288:
             if box2_y >= 216:
                 box2_x += size
+                robko_x += size
         if box2_x == 256:
             if box2_y >= 216:
                 box2_x -= size
+                robko_x -= size
         if box3_x == 288:
             if box3_y >= 216:
                 box3_x += size
+                robko_x += size
         if box3_x == 256:
             if box3_y >= 216:
                 box3_x -= size
+                robko_x -= size
         if box4_x == 288:
             if box4_y >= 216:
                 box4_x += size
+                robko_x += size
         if box4_x == 256:
             if box4_y >= 216:
                 box4_x -= size
+                robko_x -= size
 
 
 def box_move_UP():
