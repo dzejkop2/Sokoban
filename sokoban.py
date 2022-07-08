@@ -2,6 +2,8 @@ import pyglet
 from pyglet import image
 from pyglet.window import key
 
+#eyy dobre rejnou
+
 WIDTH = 576
 HEIGHT = 672
 REFRESH_RATE = 1/15
